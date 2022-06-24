@@ -5,7 +5,7 @@
 -- Dumped from database version 14.3
 -- Dumped by pg_dump version 14.3
 
--- Started on 2022-06-24 15:40:46
+-- Started on 2022-06-24 16:17:25
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -97,7 +97,7 @@ SET default_table_access_method = heap;
 --
 
 CREATE TABLE public.komentar (
-    komentar_id integer NOT NULL,
+    id integer NOT NULL,
     konten character varying NOT NULL,
     user_id integer NOT NULL,
     postingan_id integer NOT NULL
@@ -111,7 +111,7 @@ ALTER TABLE public.komentar OWNER TO postgres;
 -- Name: komentar_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-ALTER TABLE public.komentar ALTER COLUMN komentar_id ADD GENERATED ALWAYS AS IDENTITY (
+ALTER TABLE public.komentar ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
     SEQUENCE NAME public.komentar_id_seq
     START WITH 1
     INCREMENT BY 1
@@ -127,7 +127,7 @@ ALTER TABLE public.komentar ALTER COLUMN komentar_id ADD GENERATED ALWAYS AS IDE
 --
 
 CREATE TABLE public.postingan (
-    posting_id integer NOT NULL,
+    id integer NOT NULL,
     waktu_dibuat datemultirange NOT NULL,
     konten text NOT NULL,
     lokasi character varying,
@@ -142,7 +142,7 @@ ALTER TABLE public.postingan OWNER TO postgres;
 -- Name: postingan_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-ALTER TABLE public.postingan ALTER COLUMN posting_id ADD GENERATED ALWAYS AS IDENTITY (
+ALTER TABLE public.postingan ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
     SEQUENCE NAME public.postingan_id_seq
     START WITH 1
     INCREMENT BY 1
@@ -158,7 +158,7 @@ ALTER TABLE public.postingan ALTER COLUMN posting_id ADD GENERATED ALWAYS AS IDE
 --
 
 CREATE TABLE public.profile (
-    profile_id integer NOT NULL,
+    id integer NOT NULL,
     gender public.genderhuman NOT NULL,
     nomor_telp character varying NOT NULL,
     tanggal_lahir date NOT NULL,
@@ -176,7 +176,7 @@ ALTER TABLE public.profile OWNER TO postgres;
 -- Name: profile_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-ALTER TABLE public.profile ALTER COLUMN profile_id ADD GENERATED ALWAYS AS IDENTITY (
+ALTER TABLE public.profile ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
     SEQUENCE NAME public.profile_id_seq
     START WITH 1
     INCREMENT BY 1
@@ -192,7 +192,7 @@ ALTER TABLE public.profile ALTER COLUMN profile_id ADD GENERATED ALWAYS AS IDENT
 --
 
 CREATE TABLE public.users (
-    user_id integer NOT NULL,
+    id integer NOT NULL,
     nik character varying NOT NULL,
     nama character varying NOT NULL,
     email character varying NOT NULL,
@@ -207,7 +207,7 @@ ALTER TABLE public.users OWNER TO postgres;
 -- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-ALTER TABLE public.users ALTER COLUMN user_id ADD GENERATED ALWAYS AS IDENTITY (
+ALTER TABLE public.users ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
     SEQUENCE NAME public.users_id_seq
     START WITH 1
     INCREMENT BY 1
@@ -223,7 +223,7 @@ ALTER TABLE public.users ALTER COLUMN user_id ADD GENERATED ALWAYS AS IDENTITY (
 -- Data for Name: komentar; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.komentar (komentar_id, konten, user_id, postingan_id) FROM stdin;
+COPY public.komentar (id, konten, user_id, postingan_id) FROM stdin;
 \.
 
 
@@ -233,7 +233,7 @@ COPY public.komentar (komentar_id, konten, user_id, postingan_id) FROM stdin;
 -- Data for Name: postingan; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.postingan (posting_id, waktu_dibuat, konten, lokasi, user_id) FROM stdin;
+COPY public.postingan (id, waktu_dibuat, konten, lokasi, user_id) FROM stdin;
 \.
 
 
@@ -243,7 +243,7 @@ COPY public.postingan (posting_id, waktu_dibuat, konten, lokasi, user_id) FROM s
 -- Data for Name: profile; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.profile (profile_id, gender, nomor_telp, tanggal_lahir, tempat_lahir, bio, user_id, saldo) FROM stdin;
+COPY public.profile (id, gender, nomor_telp, tanggal_lahir, tempat_lahir, bio, user_id, saldo) FROM stdin;
 \.
 
 
@@ -253,7 +253,7 @@ COPY public.profile (profile_id, gender, nomor_telp, tanggal_lahir, tempat_lahir
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.users (user_id, nik, nama, email, password) FROM stdin;
+COPY public.users (id, nik, nama, email, password) FROM stdin;
 \.
 
 
@@ -299,7 +299,7 @@ SELECT pg_catalog.setval('public.users_id_seq', 1, false);
 --
 
 ALTER TABLE ONLY public.komentar
-    ADD CONSTRAINT komentar_pk1 PRIMARY KEY (komentar_id);
+    ADD CONSTRAINT komentar_pk1 PRIMARY KEY (id);
 
 
 --
@@ -326,7 +326,7 @@ ALTER TABLE ONLY public.komentar
 --
 
 ALTER TABLE ONLY public.postingan
-    ADD CONSTRAINT postingan_pk1 PRIMARY KEY (posting_id);
+    ADD CONSTRAINT postingan_pk1 PRIMARY KEY (id);
 
 
 --
@@ -344,7 +344,7 @@ ALTER TABLE ONLY public.postingan
 --
 
 ALTER TABLE ONLY public.profile
-    ADD CONSTRAINT profile_pk1 PRIMARY KEY (profile_id);
+    ADD CONSTRAINT profile_pk1 PRIMARY KEY (id);
 
 
 --
@@ -362,7 +362,7 @@ ALTER TABLE ONLY public.profile
 --
 
 ALTER TABLE ONLY public.users
-    ADD CONSTRAINT users_pk1 PRIMARY KEY (user_id);
+    ADD CONSTRAINT users_pk1 PRIMARY KEY (id);
 
 
 --
@@ -371,7 +371,7 @@ ALTER TABLE ONLY public.users
 --
 
 ALTER TABLE ONLY public.users
-    ADD CONSTRAINT users_un1 UNIQUE (user_id);
+    ADD CONSTRAINT users_un1 UNIQUE (id);
 
 
 --
@@ -380,7 +380,7 @@ ALTER TABLE ONLY public.users
 --
 
 ALTER TABLE ONLY public.komentar
-    ADD CONSTRAINT komentar_fk FOREIGN KEY (postingan_id) REFERENCES public.postingan(posting_id);
+    ADD CONSTRAINT komentar_fk FOREIGN KEY (postingan_id) REFERENCES public.postingan(id);
 
 
 --
@@ -389,7 +389,7 @@ ALTER TABLE ONLY public.komentar
 --
 
 ALTER TABLE ONLY public.komentar
-    ADD CONSTRAINT komentar_fk2 FOREIGN KEY (user_id) REFERENCES public.users(user_id);
+    ADD CONSTRAINT komentar_fk2 FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 
 --
@@ -398,10 +398,10 @@ ALTER TABLE ONLY public.komentar
 --
 
 ALTER TABLE ONLY public.profile
-    ADD CONSTRAINT profile_fk FOREIGN KEY (user_id) REFERENCES public.users(user_id);
+    ADD CONSTRAINT profile_fk FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 
--- Completed on 2022-06-24 15:40:46
+-- Completed on 2022-06-24 16:17:25
 
 --
 -- PostgreSQL database dump complete
